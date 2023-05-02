@@ -1,8 +1,9 @@
 const mongoose = require("mongoose");
+
 const productSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: [true, "Please Enter product Name"],
+    required: [true, "Please Enter product Name, Name is missing"],
     trim: true,
   },
   description: {
@@ -36,7 +37,8 @@ const productSchema = new mongoose.Schema({
   },
   Stock: {
     type: Number,
-    required: [true, "Stock cannot exceed 4 characters"],
+    required: [true, "Please Enter product Stock"],
+    maxLength: [4, "Stock cannot exceed 4 characters"],
     default: 1,
   },
   numOfReviews: {
@@ -45,11 +47,11 @@ const productSchema = new mongoose.Schema({
   },
   reviews: [
     {
-      // user: {
-      //     type: mongoose.Schema.ObjectId,
-      //     ref: "User",
-      //     required: true,
-      // },
+      user: {
+        type: mongoose.Schema.ObjectId,
+        ref: "User",
+        required: true,
+      },
       name: {
         type: String,
         required: true,
@@ -64,6 +66,12 @@ const productSchema = new mongoose.Schema({
       },
     },
   ],
+
+  // user: {
+  //   type: mongoose.Schema.ObjectId,
+  //   ref: "User",
+  //   required: true,
+  // },
   createdAt: {
     type: Date,
     default: Date.now,
